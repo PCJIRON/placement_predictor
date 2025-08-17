@@ -160,6 +160,9 @@ export default function Home() {
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Predict your placement success probability using advanced machine learning algorithms
           </p>
+          <p className="mt-4 text-lg font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 bg-clip-text text-transparent animate-pulse">
+  ✨ Created by <span className="font-bold">Prashant Chauhan</span> ✨
+</p>
         </div>
 
         {/* Main Card */}
