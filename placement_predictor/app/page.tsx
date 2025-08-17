@@ -34,7 +34,7 @@ export default function Home() {
     projects: "Number of technical projects (0 or more)",
   };
 
-  const fieldLimits = {
+  const fieldLimits: Record<string, { min: number; max: number; step?: number }> = {
     iq: { min: 0, max: 200 },
     cgpa: { min: 0, max: 10, step: 0.1 },
     academic: { min: 1, max: 10 },
@@ -59,7 +59,7 @@ export default function Home() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const numValue = parseFloat(value);
-    const limits = fieldLimits[name as keyof typeof fieldLimits];
+    const limits = fieldLimits[name];
     
     // Allow empty values for user to clear the field
     if (value === '') {
@@ -68,7 +68,7 @@ export default function Home() {
     }
     
     // Validate against min/max limits
-    if (!isNaN(numValue)) {
+    if (!isNaN(numValue) && limits) {
       if (numValue >= limits.min && numValue <= limits.max) {
         setInputs({ ...inputs, [name]: value });
       }
@@ -177,7 +177,7 @@ export default function Home() {
                 <p className="text-xs text-gray-500 mb-3">
                   {fieldDescriptions[key as keyof typeof fieldDescriptions]}
                   <span className="text-blue-600 font-medium ml-1">
-                    (Range: {fieldLimits[key as keyof typeof fieldLimits].min}-{fieldLimits[key as keyof typeof fieldLimits].max})
+                    (Range: {fieldLimits[key]?.min}-{fieldLimits[key]?.max})
                   </span>
                 </p>
                 <input
@@ -185,9 +185,9 @@ export default function Home() {
                   name={key}
                   value={(inputs as any)[key]}
                   onChange={handleChange}
-                  min={fieldLimits[key as keyof typeof fieldLimits].min}
-                  max={fieldLimits[key as keyof typeof fieldLimits].max}
-                  step={fieldLimits[key as keyof typeof fieldLimits].step || 1}
+                  min={fieldLimits[key]?.min}
+                  max={fieldLimits[key]?.max}
+                  step={fieldLimits[key]?.step || 1}
                   className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-blue-500 focus:ring-0 transition-all duration-300 bg-white/50 backdrop-blur-sm hover:border-gray-300 group-hover:shadow-md text-black font-semibold text-lg"
                   placeholder="Enter value"
                 />
